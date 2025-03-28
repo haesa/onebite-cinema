@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.container > h3 {
+  margin-bottom: 0;
+}
+
+.recommended_movies {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+}
+
+.all_movies {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+}

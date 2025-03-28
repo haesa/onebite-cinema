@@ -1,0 +1,12 @@
+.contaier {
+  cursor: pointer;
+  transition: transform 300ms ease;
+}
+
+.contaier:hover {
+  transform: scale(1.05);
+}
+
+.img {
+  width: 100%;
+}
