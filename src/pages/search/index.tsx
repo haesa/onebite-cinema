@@ -1,15 +1,29 @@
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { ReactNode } from 'react';
 import SearchableLayout from '@/components/searchable-layout';
-import movies from '@/mock/movies.json';
 import MovieItem from '@/components/movie-item';
+import fetchMovies from '@/lib/fetch-movies';
 import style from './index.module.css';
 
-const searchResults = movies.slice(0, 3);
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const q = context.query.q;
+  const movies = await fetchMovies(q as string);
 
-export default function Page() {
+  return {
+    props: {
+      movies,
+    },
+  };
+};
+
+export default function Page({
+  movies,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <div className={style.search_results}>
-      {searchResults.map((movie) => (
+      {movies.map((movie) => (
         <MovieItem key={movie.id} {...movie} />
       ))}
     </div>
