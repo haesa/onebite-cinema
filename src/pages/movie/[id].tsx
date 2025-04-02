@@ -3,6 +3,7 @@ import fetchOneMovie from '@/lib/fetch-one-movie';
 import fetchMovies from '@/lib/fetch-movies';
 import style from './[id].module.css';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 export const getStaticPaths = async () => {
   const movies = await fetchMovies();
@@ -50,20 +51,28 @@ export default function Page({
   } = movie;
 
   return (
-    <div className={style.container}>
-      <div
-        className={style.cover_img_container}
-        style={{ backgroundImage: `url('${posterImgUrl}')` }}
-      >
-        <img src={posterImgUrl} alt={title} />
+    <>
+      <Head>
+        <title>{title}</title>
+        <meta property='og:image' content={posterImgUrl} />
+        <meta property='og:title' content={title} />
+        <meta property='og:description' content={description} />
+      </Head>
+      <div className={style.container}>
+        <div
+          className={style.cover_img_container}
+          style={{ backgroundImage: `url('${posterImgUrl}')` }}
+        >
+          <img src={posterImgUrl} alt={title} />
+        </div>
+        <div className={style.title}>{title}</div>
+        <div>
+          {releaseDate} / {genres.join(', ')} / {runtime}
+        </div>
+        <div>{company}</div>
+        <div className={style.subTitle}>{subTitle}</div>
+        <div>{description}</div>
       </div>
-      <div className={style.title}>{title}</div>
-      <div>
-        {releaseDate} / {genres.join(', ')} / {runtime}
-      </div>
-      <div>{company}</div>
-      <div className={style.subTitle}>{subTitle}</div>
-      <div>{description}</div>
-    </div>
+    </>
   );
 }
